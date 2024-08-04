@@ -1,0 +1,27 @@
+<nav class="w-[1490px] h-[80px] fixed top-0 navbar">
+  <div class="flex flex-row w-[1440px] h-[65px]">
+    <ul class="flex w-[1440px] justify-around">
+      <li class="logo p-2 mr-9 font-[600] text-[32px] text-[#24221E]">
+        Speedo Transfer
+      </li>
+      <div class="flex">
+        <li class="item"><a routerLink="">Home</a></li>
+        <li class="item">
+          <a routerLink="/money-transfer">Money Transfer</a>
+        </li>
+        <div
+          *ngIf="loaderService.isloading | async"
+          class="mat-progress-bar fixed-top"
+        >
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+        <li class="item">
+          <a routerLink="/my-account">My Account</a>
+        </li>
+      </div>
+      <!--  custom -->
+
+      <ng-content></ng-content>
+    </ul>
+  </div>
+</nav>

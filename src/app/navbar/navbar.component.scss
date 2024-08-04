@@ -1,0 +1,88 @@
+nav {
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+
+  .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: #3c3a37;
+    font-weight: 500;
+  }
+  .initial {
+    border: 1px solid;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 500;
+    width: 45px;
+    height: 40px;
+    text-align: center;
+    background-color: #e3e2e2;
+    margin-right: 10px;
+    border-color: #e3e2e2;
+    color: #3c3a37;
+  }
+  .menu button {
+    margin-bottom: 10px;
+  }
+
+  .menu button.active {
+    background-color: red;
+  }
+
+  .setting .txt-red {
+    color: red;
+  }
+
+  .item {
+    position: relative;
+  }
+
+  .dropdown {
+    display: block;
+    top: 60px;
+    background-color: #ffffff;
+    width: 220px;
+    height: 320px;
+  }
+  .dropitems {
+    width: 190px;
+    margin-left: 10px;
+    padding: 20px 15px 20px 15px;
+    gap: 8px;
+    border-bottom: 1px;
+    border-style: solid;
+    border-color: #e3e2e2;
+    font-weight: 500;
+    color: #3c3a37;
+  }
+  .loggout {
+    border-bottom: 0px !important;
+    border-style: none !important;
+  }
+}
+
+:host-context(.nav-home) .item:first-child {
+  color: #871e35;
+}
+:host-context(.nav-home) .item {
+  font-weight: 500;
+}
+
+:host-context(.nav-money-transfer) .item:nth-child(2) {
+  color: #871e35;
+}
+:host-context(.nav-money-transfer) .item {
+  font-weight: 500;
+}
+
+:host-context(.nav-my-account) .item:last-child {
+  color: #871e35;
+}
+
+.mat-progress-bar {
+  background-color: hsl(347, 64%, 32%) !important;
+}

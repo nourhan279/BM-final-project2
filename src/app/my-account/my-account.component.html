@@ -1,0 +1,227 @@
+<app-navbar class="nav-my-account">
+  <li class="item relative">
+    <div class="initial">{{ getUserInitials() }}</div>
+    <button class="flex items-center space-x-2" (click)="toggleDropdown()">
+      <span>{{ user1?.fname }} {{ user1?.lname }}</span>
+      <img src="/assets/DRop_down.svg" />
+    </button>
+
+    <ul
+      *ngIf="isDropdownVisible"
+      class="dropdown absolute right-0 mt-2 w-[220] bg-white border rounded shadow-lg"
+    >
+      <li class="dropitems">
+        <a routerLink="/my-account">My Account</a>
+      </li>
+      <li class="dropitems">
+        <a (click)="navigateTo('settings')">Settings</a>
+      </li>
+      <li class="dropitems">
+        <a (click)="navigateTo('history')">Payment History</a>
+      </li>
+      <li class="dropitems">
+        <a (click)="navigateTo('change_password')">Change Password</a>
+      </li>
+      <li class="dropitems loggout"><a routerLink="/logout">Log Out</a></li>
+    </ul>
+  </li>
+</app-navbar>
+<div class="relative contain">
+  <img class="img1" src="/assets/Breadcrumb.png" alt="work image" />
+  <div class="absolute inset-0 imgcolor"></div>
+  <h1 class="absolute para">My Account</h1>
+  <ul class="list flex gap-[30px]">
+    <li><a routerLink="/">Home</a></li>
+    <li class="acc"><a routerLink="/my-account">Account</a></li>
+  </ul>
+  <img
+    class="img2"
+    src="/assets/Breadcrumb_vector.svg"
+    alt="transfer money image"
+  />
+</div>
+
+<div class="main pt-32" id="mainn">
+  <div class="flex flex-col menu">
+    <button
+      (click)="open_section('profile')"
+      [ngClass]="{ active: activeSection === 'profile' }"
+    >
+      My Profile
+    </button>
+    <button
+      (click)="open_section('history')"
+      [ngClass]="{ active: activeSection === 'history' }"
+    >
+      Payments History
+    </button>
+    <button
+      (click)="open_section('settings')"
+      [ngClass]="{ active: activeSection === 'settings' }"
+    >
+      Settings
+    </button>
+    <button
+      (click)="open_section('change_password')"
+      [ngClass]="{ active: activeSection === 'change_password' }"
+    >
+      Change Password
+    </button>
+  </div>
+
+  <!-- Profile Section -->
+  <div
+    *ngIf="activeSection === 'profile' && user1"
+    id="profile"
+    class="main-info"
+  >
+    <h1 class="font-[600] text-[24px] mb-7">My Profile</h1>
+    <div class="balance-container mb-7">
+      <p class="balance-amount">{{ user1.balance }}$</p>
+      <span class="balance-text">Balance</span>
+    </div>
+    <p class="text-[#3C3A37] font-[500] mb-4">
+      Full Name :
+      <span class="text-[#6E6D6B] font-[400] ml-7"
+        >{{ user1.fname }} {{ user1.lname }}</span
+      >
+    </p>
+    <p class="text-[#3C3A37] font-[500] mb-4">
+      Email :
+      <span class="text-[#6E6D6B] font-[400] ml-16"> {{ user1.email }}</span>
+    </p>
+    <p class="text-[#3C3A37] font-[500] mb-4">
+      Phone :
+      <span class="text-[#6E6D6B] font-[400] ml-14">{{ user1.phone }}</span>
+    </p>
+    <p class="text-[#3C3A37] font-[500] mb-4">
+      Gender :
+      <span class="text-[#6E6D6B] font-[400] ml-12"> {{ user1.gender }}</span>
+    </p>
+  </div>
+
+  <!-- Settings Section -->
+  <div
+    *ngIf="activeSection === 'settings' && user1"
+    id="settings"
+    class="setting"
+    #settings
+  >
+    <h1 class="txt-gry font-[600] text-[24px] mb-7">Settings</h1>
+    <div class="flex flex-row gap-14 text-[#6E6D6B] text-[20px] mb-6">
+      <button class="text-[20] font-[600] txt-red pb-2 pro">Profile</button>
+      <button
+        class="text-[20] font-[600]"
+        (click)="open_section('change_password')"
+      >
+        Change Password
+      </button>
+    </div>
+    <div class="update-profile">
+      <form>
+        <div class="flex flex-row gap-[15px] flex-wrap">
+          <div class="flex flex-col">
+            <label for="first-name">User name</label>
+            <input
+              id="first-name"
+              name="first-name"
+              value="{{ user1.fname }}"
+            />
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" value="+{{ user1.phone }}" />
+          </div>
+          <div class="flex flex-col">
+            <label for="last-name">Last name</label>
+            <input id="last-name" name="last-name" value="{{ user1.lname }}" />
+            <label for="email">Email</label>
+            <input id="email" name="email" value="{{ user1.email }}" />
+          </div>
+          <button>update profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment History Section -->
+  <div *ngIf="activeSection === 'history' && user1" id="history" #history>
+    <h1 class="txt-gry font-[600] text-[25px]">Payment History</h1>
+    <div *ngIf="phistory.length > 0">
+      <ul class="list-none p-0">
+        <li *ngFor="let record of phistory" class="py-4">
+          <p class="bg-[#F3E9EB] flex justify-between w-[831px] h-[56px] accno">
+            <span>Account Number:{{ record.accountNumber }}</span>
+            <span>
+              <a
+                (click)="copyToClipboard(record.accountNumber)"
+                class="cursor-pointer"
+              >
+                <fa-icon [icon]="['fas', 'clone']"></fa-icon>
+              </a>
+              <span
+                *ngIf="copiedAccountNumber === record.accountNumber"
+                class="copy-status"
+              >
+                <fa-icon [icon]="['fas', 'check']"></fa-icon> copied!😄
+              </span>
+            </span>
+          </p>
+          <p class="flex justify-between w-[800px] ml-[16px] font-[500]">
+            <span>Account Details:</span>
+            <span class="tor">Total Price:{{ record.amount | currency }}</span>
+          </p>
+          <p
+            class="flex justify-between w-[800px] ml-[16px] font-[400] text-[#4B4A47]"
+          >
+            <span>Recipient Name:</span>
+            <span class="tor">{{ record.recipientName }}</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="phistory.length === 0">
+      <p>No payment history available.</p>
+    </div>
+  </div>
+
+  <!-- Change Password Section -->
+  <div
+    *ngIf="activeSection === 'change_password' && user1"
+    id="change_password"
+    #change_password
+  >
+    <h1 class="txt-gry font-[600] text-[24px] mb-7">Settings</h1>
+    <div class="flex flex-row gap-14 text-[#6E6D6B] text-[20px] mb-7">
+      <button class="text-[20] font-[600]" (click)="setSubSection('settings')">
+        Profile
+      </button>
+      <button class="text-[20] font-[600] txt-red pb-2 chp">
+        Change Password
+      </button>
+    </div>
+    <form class="change_pass">
+      <div class="flex flex-row gap-[15px] w-[800] mb-6">
+        <div class="flex flex-col w-[368px]">
+          <label for="current_password">Current password</label>
+          <input
+            id="current_password"
+            type="password"
+            name="current_password"
+            placeholder="Type here"
+          />
+        </div>
+        <div class="flex flex-col w-[368px]">
+          <label for="New_password">New password</label>
+          <input
+            id="New_password"
+            type="password"
+            name="New_password"
+            placeholder="Type here"
+          />
+        </div>
+      </div>
+      <button>Update Password</button>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

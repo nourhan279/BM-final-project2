@@ -1,0 +1,416 @@
+<app-navbar class="nav-money-transfer">
+  <li class="item relative">
+    <div class="initial">{{ getUserInitials() }}</div>
+    <button class="flex items-center space-x-2" (click)="toggleDropdown()">
+      <span>{{ user1?.fname }} {{ user1?.lname }}</span>
+      <img src="/assets/DRop_down.svg" />
+    </button>
+    <ul
+      *ngIf="isDropdownVisible"
+      class="dropdown absolute right-0 mt-2 w-[220] bg-white border rounded shadow-lg"
+    >
+      <li class="dropitems">
+        <a href="#main">My Account</a>
+      </li>
+      <li class="dropitems">
+        <a href="#main">Settings</a>
+      </li>
+      <li class="dropitems">
+        <a href="#main">Payment History</a>
+      </li>
+      <li class="dropitems">
+        <a href="#main">Change Password</a>
+      </li>
+      <li class="dropitems loggout"><a routerLink="/logout">Log Out</a></li>
+    </ul>
+  </li>
+</app-navbar>
+
+<div class="header absolute top-20">
+  <img
+    src="/assets/Breadcrumb_vector.svg"
+    alt="Currency Exchange"
+    class="header-image"
+  />
+  <div class="content max-w-[1290px] md:p-8 lg:px-12 lg:py-16">
+    <div class="text-4xl font-semibold text-[#24221E]">Money Transfer</div>
+    <ul
+      class="mt-4 flex flex-wrap justify-center md:justify-start space-x-4 text-lg text-[#333]"
+    >
+      <li class="flex text-[#3C3A37] hover:text-[#871E35]">
+        <a routerLink="/" class="ms-2">Home</a>
+      </li>
+      <li class="flex text-[[#3C3A37] hover:text-[#871E35]">
+        <span>•</span>
+        <span
+          (click)="scrollToBottom()"
+          class="ms-2 text-[[#3C3A37] cursor-pointer hover:text-[#871E35]"
+        >
+          About us
+        </span>
+      </li>
+      <li class="flex text-[#871E35]">
+        <span>•</span>
+        <a routerLink="" class="ms-2">
+          {{
+            currentStep === 1
+              ? "Amount"
+              : currentStep === 2
+              ? "Confirmation"
+              : "Payment"
+          }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="progress-container pt-16">
+  <div class="progress-step" [class.active]="currentStep >= 1">
+    <div class="circle">01</div>
+    <div class="label">Amount</div>
+  </div>
+  <div class="progress-line first" [class.active]="currentStep >= 2"></div>
+  <div class="progress-step" [class.active]="currentStep >= 2">
+    <div class="circle">02</div>
+    <div class="label">Confirmation</div>
+  </div>
+  <div class="progress-line" [class.active]="currentStep >= 3"></div>
+  <div class="progress-step" [class.active]="currentStep >= 3">
+    <div class="circle">03</div>
+    <div class="label">Payment</div>
+  </div>
+</div>
+
+<!-- Step 1 -->
+<div *ngIf="currentStep === 1">
+  <div class="converter-container">
+    <div class="currenyConverter">
+      <h1>How much are you sending?</h1>
+      <p>Rate guaranteed (2h)<br />1 USD = 48.4220 EGP</p>
+      <form id="conversionForm" #form="ngForm">
+        <div class="input-group">
+          <label for="sendAmount">You send</label>
+          <div class="currency-input">
+            <input
+              type="number"
+              id="sendAmount"
+              name="sendAmount"
+              [(ngModel)]="sendAmount"
+              (ngModelChange)="convertCurrency()"
+            />
+
+            <!-- <select id="sendCurrency" [(ngModel)]="sendCurrency" (ngModelChange)="convertCurrency()" name="sendCurrency">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              -- Add more currencies as needed--
+              </select> w3ayza a7ot el t7t brdo fel recieve-->
+            <div class="custom-select">
+              <select
+                id="sendCurrency"
+                [(ngModel)]="sendCurrency"
+                (ngModelChange)="convertCurrency()"
+                name="sendCurrency"
+              >
+                <option
+                  value="USD"
+                  data-flag-url="../../assets/Flag_of_Kuwait.png"
+                >
+                  USD
+                </option>
+                <option
+                  value="EUR"
+                  data-flag-url="../../assets/Flag_of_Egypt.png"
+                >
+                  EUR
+                </option>
+                <option value="GBP" data-flag-url="/assets/egypt.svg">
+                  GBP
+                </option>
+                <!-- Add more currencies as needed -->
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="receiveAmount">Recipient Gets</label>
+          <div class="currency-input">
+            <input
+              type="number"
+              id="receiveAmount"
+              name="receiveAmount"
+              [value]="receiveAmount"
+              readonly
+            />
+            <div class="custom-select">
+              <select
+                id="receiveCurrency"
+                [(ngModel)]="receiveCurrency"
+                (ngModelChange)="convertCurrency()"
+                name="receiveCurrency"
+              >
+                <option value="EGP" data-flag-url="/assets/egypt.svg">
+                  <img src="/assets/egypt.svg" />
+                  EGP
+                </option>
+                <option value="INR">INR</option>
+                <option value="CAD">CAD</option>
+                <!-- Add more currencies as needed -->
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row text-left">
+          <div class="recipient-info mb-4 w-[80%]">Recipient Information</div>
+          <!-- Favourite Section -->
+          <div
+            class="favourite-section flex flex-row text-left cursor-pointer"
+            (click)="openPopup()"
+          >
+            <div class="text-[#871e35]">
+              <fa-icon [icon]="faStar"></fa-icon>
+            </div>
+            <div class="ms-1 text-[#871e35]">Favourite</div>
+            <div class="text-[10px] ms-1 mt-[6px]">
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+            </div>
+          </div>
+
+          <!-- Pop-up Modal -->
+          <div *ngIf="isPopupOpen" class="popup-overlay" (click)="closePopup()">
+            <div class="popup-content" (click)="$event.stopPropagation()">
+              <span class="close-button" (click)="closePopup()">&times;</span>
+              <div
+                class="favourite-section flex flex-col text-left cursor-pointer"
+                (click)="openPopup()"
+              >
+                <div class="flex flex-row mb-3">
+                  <div class="text-[#871e35]">
+                    <fa-icon [icon]="faStar"></fa-icon>
+                  </div>
+                  <div class="ms-1 text-[#871e35]">Favourite List</div>
+                </div>
+
+                <div
+                  class="p-4 bg-gray-100 flex items-center justify-between mb-4"
+                >
+                  <div class="w-full flex items-center">
+                    <fa-icon
+                      [icon]="faBuildingColumns"
+                      class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
+                    ></fa-icon>
+                    <div>
+                      <div class="font-semibold mt-1 mb-1 text-[#3C3A37] bg">
+                        Asmaa Dosouki
+                      </div>
+                      <p class="text-gray-500">Account xxxx7890</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="recipientName">Recipient Name</label>
+          <input
+            type="text"
+            id="recipientName"
+            name="recipientName"
+            [(ngModel)]="recipientName"
+            required
+            #recipientNameInput="ngModel"
+          />
+          <div
+            *ngIf="
+              recipientNameInput.invalid &&
+              (recipientNameInput.dirty || recipientNameInput.touched)
+            "
+            class="error-message"
+          >
+            Recipient name is required.
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="recipientAccount">Recipient Account</label>
+          <input
+            type="text"
+            id="recipientAccount"
+            name="recipientAccount"
+            [(ngModel)]="recipientAccount"
+            required
+            pattern="^[0-9]{16}$"
+            #recipientAccountInput="ngModel"
+          />
+          <div
+            *ngIf="
+              recipientAccountInput.invalid &&
+              (recipientAccountInput.dirty || recipientAccountInput.touched)
+            "
+            class="error-message"
+          >
+            Recipient account is required and must contain 16 digits.
+          </div>
+        </div>
+        <button
+          type="button"
+          (click)="goToNextStep()"
+          [disabled]="form.invalid || sendAmount <= 0"
+        >
+          Continue
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 -->
+<div *ngIf="currentStep === 2">
+  <div class="max-w-[578px] mx-auto mt-10 p-2 bg-white rounded-lg shadow-md">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold">1000 USD</h1>
+      <p class="text-gray-600">Transfer amount</p>
+    </div>
+    <div class="flex flex-row w-full">
+      <p class="ps-4 w-[75%]">Total amount</p>
+      <p class="font-bold ps-3">48.4220 EGP</p>
+    </div>
+    <div class="w-[95%] h-[1px] bg-[#E3E2E2] mb-5 ms-3 mt-3"></div>
+
+    <!-- Transaction Details -->
+    <div class="p-3 rounded-lg mb-6">
+      <div class="flex flex-col mb-4">
+        <div class="flex flex-col mb-4">
+          <div class="p-4 bg-gray-100 flex items-center justify-between mb-4">
+            <div class="w-full flex items-center">
+              <fa-icon
+                [icon]="faBuildingColumns"
+                class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
+              ></fa-icon>
+              <div>
+                <p class="from font-semibold">From</p>
+                <div class="font-semibold mt-1 mb-1 text-[#3C3A37]">
+                  Jonathon Smith
+                </div>
+                <p class="text-gray-500">Account xxxx7890</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center text-2xl text-black mb-4"
+          >
+            <fa-icon [icon]="faArrowRightArrowLeft"></fa-icon>
+          </div>
+          <div class="p-4 bg-gray-100 flex items-center justify-between mb-4">
+            <div class="w-full flex items-center">
+              <fa-icon
+                [icon]="faBuildingColumns"
+                class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
+              ></fa-icon>
+              <div>
+                <p class="to from font-semibold">To</p>
+                <div class="font-semibold mt-1 mb-1 text-[#3C3A37] bg">
+                  Asmaa Dosouki
+                </div>
+                <p class="text-gray-500">Account xxxx7890</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col space-y-2">
+        <button class="w-full py-2 rounded-lg" (click)="goToNextStep()">
+          Confirm
+        </button>
+        <button class="w-full py-2 rounded-lg" (click)="goToPreviousStep()">
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3 -->
+<div *ngIf="currentStep === 3">
+  <div
+    class="max-w-[578px] mx-auto mt-10 p-2 bg-white rounded-lg shadow-md text-center"
+  >
+    <fa-icon
+      [icon]="faCheck"
+      class="text-2xl text-white bg-[#C36565] p-3 rounded-circle"
+    ></fa-icon>
+
+    <div class="text-center mb-6 mt-5">
+      <h1 class="text-3xl font-bold">Your transfer was successful</h1>
+      <h3 class="text-3xl font-bold">
+        48.4220 <span class="text-[#871e35]">EGP</span>
+      </h3>
+    </div>
+
+    <!-- Transaction Details -->
+    <div class="p-4 rounded-lg mb-6">
+      <div class="flex flex-col mb-4">
+        <div class="flex flex-col mb-4">
+          <div class="p-4 bg-gray-100 flex items-center justify-between mb-4">
+            <div class="w-full flex items-center">
+              <fa-icon
+                [icon]="faBuildingColumns"
+                class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
+              ></fa-icon>
+              <div>
+                <p class="from font-semibold text-left">From</p>
+                <div class="font-semibold mt-1 mb-1 text-[#3C3A37]">
+                  Jonathon Smith
+                </div>
+                <p class="text-gray-500">Account xxxx7890</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-center text-2xl text-black mb-4"
+          >
+            <fa-icon [icon]="faArrowRightArrowLeft"></fa-icon>
+          </div>
+          <div class="p-4 bg-gray-100 flex items-center justify-between mb-4">
+            <div class="w-full flex items-center">
+              <fa-icon
+                [icon]="faBuildingColumns"
+                class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
+              ></fa-icon>
+              <div>
+                <p class="to from font-semibold text-left">To</p>
+                <div class="text-left font-semibold mt-1 mb-1 text-[#3C3A37]">
+                  Asmaa dosouki
+                </div>
+                <p class="text-gray-500">Account xxxx7890</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row w-full text-[#565552] mt-0">
+        <div class="ps-2 w-[75%] text-left">Transfer amount</div>
+        <div class="ps-4">48.4220 EGP</div>
+      </div>
+      <div class="w-[95%] h-[1px] bg-[#E3E2E2] mb-5 ms-3 mt-3"></div>
+      <div class="flex flex-row w-full text-[#565552] mt-0">
+        <div class="ps-2 w-[75%] text-left">Fees</div>
+        <div class="ms-4 p-2 bg-[#E3E2E2] rounded-full">18.97 USD</div>
+      </div>
+      <div class="w-[95%] h-[1px] bg-[#E3E2E2] mb-5 ms-3 mt-3"></div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col space-y-2">
+        <button routerLink="/" class="w-full py-2 rounded-lg">
+          Back to home
+        </button>
+        <button class="w-full py-2 rounded-lg">Add to favourite</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer class="money-footer" id="bottom-of-page"></app-footer>

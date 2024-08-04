@@ -1,0 +1,13 @@
+<div mat-dialog-title class="dialog-title">
+  <img src="/assets/alert.svg" alt="alert image" class="alert-image" />
+  <span class="alert-text">Session Expired</span>
+</div>
+<div mat-dialog-content>
+  <p class="dialog-message">
+    We logged you out because you were inactive for 5 minutes - it’s to help
+    your account secure.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button class="p-2" mat-button (click)="closeDialog()">OK</button>
+</div>

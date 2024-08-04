@@ -1,0 +1,215 @@
+<div class="page-container">
+  <div class="flex flex-row justify-between">
+    <h1 class="text-[32px] text-[#24221E] mb-10 ml-4">Speedo Transfer</h1>
+    <span
+      ><a href="#"><i class="fa-solid fa-x text-black mr-4"></i></a
+    ></span>
+  </div>
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <div class="top">
+      <p
+        style="
+          font-size: 32px;
+          font-weight: 600;
+          line-height: 48px;
+          text-align: left;
+        "
+      >
+        Create Your Account
+      </p>
+      <p
+        style="
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+          text-align: left;
+        "
+      >
+        Lorem ipsum dolor sit amet consectetur adipiscing elit sed do<span
+          >eiusmod tempor incididunt ut labore.</span
+        >
+      </p>
+    </div>
+    <div>
+      <label for="username">User name</label>
+      <input
+        id="username"
+        formControlName="username"
+        type="text"
+        placeholder="username"
+      />
+      <div
+        *ngIf="
+          registrationForm.get('username')?.invalid &&
+          registrationForm.get('username')?.touched
+        "
+      >
+        <small
+          *ngIf="registrationForm.get('username')?.hasError('required')"
+          class="text-danger"
+          >Username is required.</small
+        >
+        <small
+          *ngIf="registrationForm.get('username')?.hasError('minlength')"
+          class="text-danger"
+          >Username must be at least 8 characters long.</small
+        >
+
+        <small
+          *ngIf="registrationForm.get('username')?.hasError('nameFormat')"
+          class="text-danger"
+          >Username must be in the format "FirstName LastName" with each part
+          capitalized.</small
+        >
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email address</label>
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        placeholder="email"
+      />
+      <div
+        *ngIf="
+          registrationForm.get('email')?.invalid &&
+          registrationForm.get('email')?.touched
+        "
+      >
+        <small
+          *ngIf="registrationForm.get('email')?.hasError('required')"
+          class="text-danger"
+          >email is required.</small
+        >
+        <small
+          *ngIf="registrationForm.get('email')?.hasError('email')"
+          class="text-danger"
+          >please enter a valid email.</small
+        >
+      </div>
+    </div>
+
+    <div>
+      <label for="country">Country</label>
+
+      <select id="country" formControlName="country">
+        <option value="UK">UK</option>
+        <option value="US">US</option>
+        <option value="Egupt">Egypt</option>
+      </select>
+    </div>
+
+    <div formGroupName="dob">
+      <label for="dob">Date of birth</label>
+      <div class="grid-container">
+        <input
+          id="day"
+          formControlName="day"
+          type="text"
+          placeholder="DD"
+          class="grid_item"
+        />
+        <select
+          required
+          id="month"
+          formControlName="month"
+          type="text"
+          placeholder="MM"
+          class="grid-item"
+          onfocus="this.size=6;"
+          onblur="this.size=0;"
+          onblur="this.size=0;"
+          onchange="this.size=1; this.blur()"
+        >
+          <option value="" disabled selected>MM</option>
+          <option *ngFor="let month of months" [value]="month">
+            {{ month }}
+          </option>
+        </select>
+
+        <select
+          required
+          id="year"
+          formControlName="year"
+          type="text"
+          class="grid-item"
+          class="grid-item"
+          onfocus="this.size=6;"
+          onblur="this.size=0;"
+          onblur="this.size=0;"
+          onchange="this.size=1; this.blur()"
+        >
+          <option value="" disabled selected>YYYY</option>
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="password">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        placeholder="password "
+      />
+      <div *ngIf="registrationForm.get('password')?.touched">
+        <small
+          *ngIf="registrationForm.get('password')?.hasError('required')"
+          class="text-danger"
+          >password is required.</small
+        >
+        <small
+          *ngIf="registrationForm.get('password')?.hasError('minlength')"
+          class="text-danger"
+          >password must be at least 8 characters</small
+        >
+      </div>
+    </div>
+
+    <div>
+      <label for="confirmPassword">Confirm password</label>
+      <input
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        type="password"
+      />
+      <small>
+        The password should be at least eight characters long. To make it
+        stronger, use upper and lower case letters, numbers, and symbols like !
+        " ? $ % ^ &
+      </small>
+      <div *ngIf="registrationForm.get('confirmPassword')?.touched">
+        <small
+          *ngIf="registrationForm.get('confirmPassword')?.hasError('required')"
+          class="text-danger"
+        >
+          Confirm password is required.
+        </small>
+        <small
+          *ngIf="registrationForm.hasError('matchpassword')"
+          class="text-danger"
+        >
+          Passwords mismatched
+        </small>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="w-96 py-2 ml-2"
+      [disabled]="!registrationForm.valid"
+    >
+      Create Account
+    </button>
+    <div style="text-align: center">
+      <p>Already have an account? <a routerLink="/login">Login</a></p>
+    </div>
+  </form>
+
+  <footer class="footer">
+    <p class="style10">©Speedo Transfer Payments Limited 2024</p>
+  </footer>
+</div>
