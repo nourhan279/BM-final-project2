@@ -334,6 +334,7 @@
 </div>
 
 <!-- Step 3 -->
+<!-- Step 3 -->
 <div *ngIf="currentStep === 3">
   <div
     class="max-w-[578px] mx-auto mt-10 p-2 bg-white rounded-lg shadow-md text-center"
@@ -407,8 +408,21 @@
         <button routerLink="/" class="w-full py-2 rounded-lg">
           Back to home
         </button>
-        <button class="w-full py-2 rounded-lg">Add to favourite</button>
+        <button (click)="openPopup()" class="w-full py-2 rounded-lg">
+          Add to favourite
+        </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Popup for Add to Favourite -->
+  <div class="popup" *ngIf="isPopupOpen">
+    <div class="popup-content">
+      <div class="popup-animation">
+        <fa-icon [icon]="faCheck" class="text-3xl text-green-600"></fa-icon>
+      </div>
+      <p class="popup-message">Added to favourites successfully!</p>
+      <button (click)="closePopup()" class="close-popup-btn">Close</button>
     </div>
   </div>
 </div>
