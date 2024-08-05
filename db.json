@@ -12,7 +12,7 @@
     "currentPassword": "",
     "newPassword": ""
   },
-  "verify-password": {
-    "valid": true
+  "balance": {
+    "amout": 1000
   }
 }

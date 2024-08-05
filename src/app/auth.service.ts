@@ -37,20 +37,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://3.70.134.143';
 
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<any> {
     return this.http.get(`${this.apiUrl}/user`);
   }
-
-  updateUser(updatedFields: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/user/4299`, updatedFields);
+  getbalance(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/balance`);
   }
 
-  verifyCurrentPassword(password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/verify-password`, { password });
+  updateUser(updatedFields: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/user`, updatedFields);
   }
 
   updatePassword(passwordData: {
