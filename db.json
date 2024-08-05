@@ -1,0 +1,18 @@
+{
+  "user": [
+    {
+      "username": "nourhan try3",
+      "email": "abcdfg123@email.com",
+      "phoneNumber": "201020304050",
+      "gender": "male",
+      "id": "4299"
+    }
+  ],
+  "password": {
+    "currentPassword": "",
+    "newPassword": ""
+  },
+  "verify-password": {
+    "valid": true
+  }
+}

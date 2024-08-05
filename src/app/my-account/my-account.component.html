@@ -2,7 +2,7 @@
   <li class="item relative">
     <div class="initial">{{ getUserInitials() }}</div>
     <button class="flex items-center space-x-2" (click)="toggleDropdown()">
-      <span>{{ user1?.fname }} {{ user1?.lname }}</span>
+      <span>{{ user1.username }}</span>
       <img src="/assets/DRop_down.svg" />
     </button>
 
@@ -26,7 +26,7 @@
     </ul>
   </li>
 </app-navbar>
-<div class="relative contain">
+<header class="relative contain">
   <img class="img1" src="/assets/Breadcrumb.png" alt="work image" />
   <div class="absolute inset-0 imgcolor"></div>
   <h1 class="absolute para">My Account</h1>
@@ -39,10 +39,10 @@
     src="/assets/Breadcrumb_vector.svg"
     alt="transfer money image"
   />
-</div>
+</header>
 
 <div class="main pt-32" id="mainn">
-  <div class="flex flex-col menu">
+  <aside class="flex flex-col menu">
     <button
       (click)="open_section('profile')"
       [ngClass]="{ active: activeSection === 'profile' }"
@@ -67,7 +67,7 @@
     >
       Change Password
     </button>
-  </div>
+  </aside>
 
   <!-- Profile Section -->
   <div
@@ -77,14 +77,12 @@
   >
     <h1 class="font-[600] text-[24px] mb-7">My Profile</h1>
     <div class="balance-container mb-7">
-      <p class="balance-amount">{{ user1.balance }}$</p>
+      <p class="balance-amount">10000$</p>
       <span class="balance-text">Balance</span>
     </div>
     <p class="text-[#3C3A37] font-[500] mb-4">
       Full Name :
-      <span class="text-[#6E6D6B] font-[400] ml-7"
-        >{{ user1.fname }} {{ user1.lname }}</span
-      >
+      <span class="text-[#6E6D6B] font-[400] ml-7">{{ user1.username }} </span>
     </p>
     <p class="text-[#3C3A37] font-[500] mb-4">
       Email :
@@ -92,7 +90,9 @@
     </p>
     <p class="text-[#3C3A37] font-[500] mb-4">
       Phone :
-      <span class="text-[#6E6D6B] font-[400] ml-14">{{ user1.phone }}</span>
+      <span class="text-[#6E6D6B] font-[400] ml-14">{{
+        user1.phoneNumber
+      }}</span>
     </p>
     <p class="text-[#3C3A37] font-[500] mb-4">
       Gender :
@@ -101,8 +101,17 @@
   </div>
 
   <!-- Settings Section -->
+  <div class="popup" *ngIf="isPopupOpen">
+    <div class="popup-content">
+      <div class="popup-animation">
+        <fa-icon [icon]="faCheck" class="text-3xl text-green-600"></fa-icon>
+      </div>
+      <p class="popup-message">Updated Successfully!</p>
+      <button (click)="closePopup()" class="close-popup-btn">Close</button>
+    </div>
+  </div>
   <div
-    *ngIf="activeSection === 'settings' && user1"
+    *ngIf="activeSection === 'settings'"
     id="settings"
     class="setting"
     #settings
@@ -118,25 +127,25 @@
       </button>
     </div>
     <div class="update-profile">
-      <form>
+      <form (ngSubmit)="updateProfile()">
         <div class="flex flex-row gap-[15px] flex-wrap">
           <div class="flex flex-col">
             <label for="first-name">User name</label>
             <input
               id="first-name"
               name="first-name"
-              value="{{ user1.fname }}"
+              [(ngModel)]="user1.username"
             />
             <label for="phone">Phone</label>
-            <input id="phone" name="phone" value="+{{ user1.phone }}" />
+            <input id="phone" name="phone" [(ngModel)]="user1.phoneNumber" />
           </div>
           <div class="flex flex-col">
             <label for="last-name">Last name</label>
-            <input id="last-name" name="last-name" value="{{ user1.lname }}" />
+            <input id="last-name" name="last-name" [(ngModel)]="lastName" />
             <label for="email">Email</label>
-            <input id="email" name="email" value="{{ user1.email }}" />
+            <input id="email" name="email" [(ngModel)]="user1.email" />
           </div>
-          <button>update profile</button>
+          <button type="submit">update profile</button>
         </div>
       </form>
     </div>
@@ -198,7 +207,7 @@
         Change Password
       </button>
     </div>
-    <form class="change_pass">
+    <form class="change_pass" (ngSubmit)="updatePassword()">
       <div class="flex flex-row gap-[15px] w-[800] mb-6">
         <div class="flex flex-col w-[368px]">
           <label for="current_password">Current password</label>
@@ -206,6 +215,7 @@
             id="current_password"
             type="password"
             name="current_password"
+            [(ngModel)]="currentPassword"
             placeholder="Type here"
           />
         </div>
@@ -215,11 +225,12 @@
             id="New_password"
             type="password"
             name="New_password"
+            [(ngModel)]="newPassword"
             placeholder="Type here"
           />
         </div>
       </div>
-      <button>Update Password</button>
+      <button type="submit">Update Password</button>
     </form>
   </div>
 </div>
