@@ -3,13 +3,11 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { nameFormatValidator } from '../validators/custom.validator';
 import { matchPasswordValidator } from '../validators/matchpassword.validator';
 import { AuthService } from '../auth.service';
-import { user, User2 } from '../profile.service';
+import { User2 } from '../profile.service'; // Ensure this matches your actual import path
 import { Router } from '@angular/router';
 import { dateValidator } from '../validators/datevalidator.validator';
 import { Subscription } from 'rxjs';
 import { LoaderService } from '../loader/loader.service';
-
-// Custom validator function to check if at least one checkbox is selected
 
 @Component({
   selector: 'app-create-account',
@@ -55,8 +53,9 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
           [Validators.required, Validators.minLength(8), nameFormatValidator()],
         ],
         email: ['', [Validators.required, Validators.email]],
-        country: ['UK', Validators.required],
-        dob: this.fb.group(
+        phoneNumber: ['', [Validators.required, Validators.minLength(11)]],
+        country: ['EG', Validators.required], // Default country code as 'EG'
+        dateOfBirth: this.fb.group(
           {
             day: [
               '',
@@ -82,9 +81,7 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
           },
           { validators: dateValidator() }
         ),
-        genderMale: [false],
-        genderFemale: [false],
-        genderOther: [false],
+        gender: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', [Validators.required]],
       },
@@ -92,74 +89,74 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
     );
 
     this.registrationForm.markAllAsTouched();
-
-    // Log form validity and errors after initialization
-    console.log('Form Initialized');
-    console.log('Form Valid:', this.registrationForm.valid);
-    console.log('Form Errors:', this.registrationForm.errors);
-    console.log(
-      'Password Control Errors:',
-      this.registrationForm.get('password')?.errors
-    );
-    console.log(
-      'Confirm Password Control Errors:',
-      this.registrationForm.get('confirmPassword')?.errors
-    );
-    console.log(
-      'Password Control Touched:',
-      this.registrationForm.get('password')?.touched
-    );
-    console.log(
-      'Confirm Password Control Touched:',
-      this.registrationForm.get('confirmPassword')?.touched
-    );
-    console.log('Form Controls:', this.registrationForm.controls);
-    console.log(
-      'Password Control Errors:',
-      this.registrationForm.get('password')?.errors
-    );
-    console.log(
-      'Confirm Password Control Errors:',
-      this.registrationForm.get('confirmPassword')?.errors
-    );
-    console.log(
-      'Email Control Errors:',
-      this.registrationForm.get('email')?.errors
-    );
-    console.log(
-      'Username Control Errors:',
-      this.registrationForm.get('username')?.errors
-    );
-    console.log(
-      'Country Control Errors:',
-      this.registrationForm.get('country')?.errors
-    );
   }
 
   ngOnDestroy() {
-    console.log('CreateAccountComponent is being destroyed');
     if (this.registerUserSubscription) {
       this.registerUserSubscription.unsubscribe();
-      console.log('Unsubscribed from registerUserSubscription');
     }
   }
 
   onSubmit() {
-    if (this.registrationForm.valid) {
-      console.log('Form Submitted', this.registrationForm.value);
-      const postData = { ...this.registrationForm.value };
-      delete postData.confirmPassword;
-      this.registerUserSubscription = this.authService
-        .registerUser(postData as User2)
-        .subscribe(
-          (response) => {
-            console.log(response);
-            this.router.navigate(['login']);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+    if (this.registrationForm.invalid) {
+      console.log('Form is invalid');
+      return;
     }
+
+    const gender = this.registrationForm.get('gender')?.value.toUpperCase(); // Convert gender to uppercase
+    if (!['MALE', 'FEMALE', 'OTHER'].includes(gender)) {
+      console.error('Invalid gender selected');
+      return;
+    }
+
+    const dob = {
+      year: this.registrationForm.get('dateOfBirth.year')?.value ?? '',
+      month: this.registrationForm.get('dateOfBirth.month')?.value ?? '',
+      day: this.registrationForm.get('dateOfBirth.day')?.value ?? '',
+    };
+    const birthDate = `${dob.year}-${monthToNumber(
+      dob.month
+    )}-${dob.day.padStart(2, '0')}`;
+
+    const requestBody: User2 = {
+      email: this.registrationForm.get('email')?.value ?? '',
+      phoneNumber: this.registrationForm.get('phoneNumber')?.value ?? '',
+      username: this.registrationForm.get('username')?.value ?? '',
+      password: this.registrationForm.get('password')?.value ?? '',
+      confirmPassword:
+        this.registrationForm.get('confirmPassword')?.value ?? '',
+      gender,
+
+      country: 'EGYPT', // Set country to "EGYPT"
+      dateOfBirth: birthDate,
+    };
+
+    this.authService.register(requestBody).subscribe(
+      (response) => {
+        console.log('Registration successful:', response);
+        this.router.navigate(['login']);
+      },
+      (error) => {
+        console.error('Registration failed:', error);
+      }
+    );
   }
+}
+
+function monthToNumber(month: string): string {
+  const months: Record<string, string> = {
+    January: '01',
+    February: '02',
+    March: '03',
+    April: '04',
+    May: '05',
+    June: '06',
+    July: '07',
+    August: '08',
+    September: '09',
+    October: '10',
+    November: '11',
+    December: '12',
+  };
+  return months[month] ?? '01'; // Default to '01' if month is not found
 }

@@ -96,6 +96,32 @@
         >
       </div>
     </div>
+    <div>
+      <label for="phoneNumber">phoneNumber</label>
+      <input
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        type="text"
+        placeholder="phoneNumber"
+      />
+      <div
+        *ngIf="
+          registrationForm.get('phoneNumber')?.invalid &&
+          registrationForm.get('phoneNumber')?.touched
+        "
+      >
+        <small
+          *ngIf="registrationForm.get('phoneNumber')?.hasError('required')"
+          class="text-danger"
+          >phoneNumber is required.</small
+        >
+        <small
+          *ngIf="registrationForm.get('phoneNumber')?.hasError('phoneNumber')"
+          class="text-danger"
+          >please enter a valid phoneNumber.</small
+        >
+      </div>
+    </div>
 
     <div>
       <label for="country">Country</label>
@@ -107,9 +133,49 @@
       </select>
     </div>
 
+    <div>
+      <label for="gender">Gender</label>
+      <div class="grid-container p-1 mx-5">
+        <div class="grid-item">
+          <label for="male">Male</label>
+          <input type="radio" id="male" formControlName="gender" value="MALE" />
+        </div>
+        <div class="grid-item">
+          <label for="FEMALE">Female</label>
+          <input
+            type="radio"
+            id="female"
+            formControlName="gender"
+            value="Female"
+          />
+        </div>
+        <div class="grid-item">
+          <label for="other">Other</label>
+          <input
+            type="radio"
+            id="other"
+            formControlName="gender"
+            value="Other"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="
+          registrationForm.get('gender')?.touched &&
+          registrationForm.get('gender')?.invalid
+        "
+      >
+        <small
+          *ngIf="registrationForm.get('gender')?.hasError('required')"
+          class="text-danger"
+          >Gender is required</small
+        >
+      </div>
+    </div>
+
     <!-- Date of Birth -->
-    <div formGroupName="dob">
-      <label for="dob">Date of Birth</label>
+    <div formGroupName="dateOfBirth">
+      <label for="dateOfBirth">Date of Birth</label>
       <div class="grid-container">
         <input
           id="day"
@@ -147,48 +213,50 @@
       </div>
       <div
         *ngIf="
-          registrationForm.get('dob')?.invalid &&
-          registrationForm.get('dob')?.touched
+          registrationForm.get('dateOfBirth')?.invalid &&
+          registrationForm.get('dateOfBirth')?.touched
         "
       >
         <small
-          *ngIf="registrationForm.get('dob.day')?.hasError('required')"
+          *ngIf="registrationForm.get('dateOfBirth.day')?.hasError('required')"
           class="text-danger"
           >Day is required.</small
         >
         <small
-          *ngIf="registrationForm.get('dob.day')?.hasError('pattern')"
+          *ngIf="registrationForm.get('dateOfBirth.day')?.hasError('pattern')"
           class="text-danger"
           >Day must be a digit.</small
         >
 
         <small
-          *ngIf="registrationForm.get('dob.day')?.hasError('min')"
+          *ngIf="registrationForm.get('dateOfBirth.day')?.hasError('min')"
           class="text-danger"
         >
           Day must be greater than 0.
         </small>
         <small
-          *ngIf="registrationForm.get('dob.day')?.hasError('max')"
+          *ngIf="registrationForm.get('dateOfBirth.day')?.hasError('max')"
           class="text-danger"
         >
           Day cannot exceed 31.
         </small>
 
         <small
-          *ngIf="registrationForm.get('dob.month')?.hasError('required')"
+          *ngIf="
+            registrationForm.get('dateOfBirth.month')?.hasError('required')
+          "
           class="text-danger"
           >Month is required.</small
         >
 
         <small
-          *ngIf="registrationForm.get('dob.year')?.hasError('required')"
+          *ngIf="registrationForm.get('dateOfBirth.year')?.hasError('required')"
           class="text-danger"
           >Year is required.</small
         >
 
         <small
-          *ngIf="registrationForm.get('dob')?.hasError('underage')"
+          *ngIf="registrationForm.get('dateOfBirth')?.hasError('underage')"
           class="text-danger"
           >You must be at least 18 years old.</small
         >

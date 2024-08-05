@@ -30,7 +30,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from './loader/loader.interceptor';
 import { HttpClientModule } from '@angular/common/http';
-
+import { AuthInterceptor } from './auth.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +61,9 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     ProfileService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {
