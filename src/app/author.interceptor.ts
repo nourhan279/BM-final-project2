@@ -18,7 +18,7 @@ export class AuthorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // Replace 'YOUR_TOKEN_HERE' with the actual token
     const authToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJubm5ubm5AZW1haWwuY29tIiwiaWF0IjoxNzIyODk2MTg5LCJleHAiOjE3MjI4OTk3ODl9.tTMunfKTI7Zbt41jK5x1-aIBjXVAfbiH3JMZIU6cQK8';
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJubm5ubm5AZW1haWwuY29tIiwiaWF0IjoxNzIyOTAxMjYwLCJleHAiOjE3MjI5MDQ4NjB9.QXmbBERo6DecoWpxca4PshtX7DLWEV_jWwSyknE5g94';
 
     // Clone the request and set the new header
     const authReq = req.clone({
