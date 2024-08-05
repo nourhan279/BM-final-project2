@@ -29,6 +29,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 // import { LoaderComponent } from './loader/loader.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from './loader/loader.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { LoaderInterceptor } from './loader/loader.interceptor';
     FontAwesomeModule,
     FormsModule,
     MatProgressBarModule,
+    HttpClientModule,
   ],
   providers: [
     ProfileService,

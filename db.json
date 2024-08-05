@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "username": "Abdelrahman Elaby",
+      "email": "aby@email.com",
+      "phoneNumber": "+2034567891234",
+      "address": "",
+      "country": "EGYPT",
+      "gender": "MALE",
+      "dateOfBirth": "2003-02-09",
+      "password": "123456",
+      "card": null
+    }
+  ]
+}

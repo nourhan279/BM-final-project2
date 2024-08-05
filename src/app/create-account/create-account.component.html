@@ -5,6 +5,12 @@
       ><a href="#"><i class="fa-solid fa-x text-black mr-4"></i></a
     ></span>
   </div>
+  <div
+    *ngIf="loaderService.isloading | async"
+    class="mat-progress-bar fixed-top"
+  >
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="top">
       <p
@@ -101,49 +107,91 @@
       </select>
     </div>
 
+    <!-- Date of Birth -->
     <div formGroupName="dob">
-      <label for="dob">Date of birth</label>
+      <label for="dob">Date of Birth</label>
       <div class="grid-container">
         <input
           id="day"
           formControlName="day"
           type="text"
           placeholder="DD"
-          class="grid_item"
+          class="grid-item"
         />
         <select
           required
           id="month"
           formControlName="month"
-          type="text"
-          placeholder="MM"
           class="grid-item"
           onfocus="this.size=6;"
-          onblur="this.size=0;"
-          onblur="this.size=0;"
-          onchange="this.size=1; this.blur()"
+          onblur="this.size=1;"
+          onchange="this.size=1; this.blur();"
         >
           <option value="" disabled selected>MM</option>
           <option *ngFor="let month of months" [value]="month">
             {{ month }}
           </option>
         </select>
-
         <select
           required
           id="year"
           formControlName="year"
-          type="text"
-          class="grid-item"
           class="grid-item"
           onfocus="this.size=6;"
-          onblur="this.size=0;"
-          onblur="this.size=0;"
-          onchange="this.size=1; this.blur()"
+          onblur="this.size=1;"
+          onchange="this.size=1; this.blur();"
         >
           <option value="" disabled selected>YYYY</option>
           <option *ngFor="let year of years" [value]="year">{{ year }}</option>
         </select>
+      </div>
+      <div
+        *ngIf="
+          registrationForm.get('dob')?.invalid &&
+          registrationForm.get('dob')?.touched
+        "
+      >
+        <small
+          *ngIf="registrationForm.get('dob.day')?.hasError('required')"
+          class="text-danger"
+          >Day is required.</small
+        >
+        <small
+          *ngIf="registrationForm.get('dob.day')?.hasError('pattern')"
+          class="text-danger"
+          >Day must be a digit.</small
+        >
+
+        <small
+          *ngIf="registrationForm.get('dob.day')?.hasError('min')"
+          class="text-danger"
+        >
+          Day must be greater than 0.
+        </small>
+        <small
+          *ngIf="registrationForm.get('dob.day')?.hasError('max')"
+          class="text-danger"
+        >
+          Day cannot exceed 31.
+        </small>
+
+        <small
+          *ngIf="registrationForm.get('dob.month')?.hasError('required')"
+          class="text-danger"
+          >Month is required.</small
+        >
+
+        <small
+          *ngIf="registrationForm.get('dob.year')?.hasError('required')"
+          class="text-danger"
+          >Year is required.</small
+        >
+
+        <small
+          *ngIf="registrationForm.get('dob')?.hasError('underage')"
+          class="text-danger"
+          >You must be at least 18 years old.</small
+        >
       </div>
     </div>
 
