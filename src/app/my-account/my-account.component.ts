@@ -235,11 +235,14 @@ import {
   styleUrls: ['./my-account.component.scss'],
 })
 export class MyAccountComponent {
-  user1 = {
+  user1: any = {
     username: '',
     phoneNumber: '',
     email: '',
     gender: '',
+    country: '',
+    dateOfBirth: '',
+    accounts: [],
   };
 
   showCopyMessage = false;
@@ -248,7 +251,7 @@ export class MyAccountComponent {
   lastName: string = '';
   isPopupOpen: boolean = false;
   faCheck = faCheck;
-  balance: any = 0;
+  balance: string = '';
 
   @ViewChild('profile') profileSection!: ElementRef;
   @ViewChild('settings') settingsSection!: ElementRef;
@@ -269,16 +272,18 @@ export class MyAccountComponent {
 
   ngOnInit(): void {
     this.authService.getUser().subscribe((data) => {
-      console.log(data);
-      this.user1 = data[0];
+      this.user1 = data;
+
       this.extractLastName();
     });
+    this.loadBalance();
   }
 
   loadBalance(): void {
     this.authService.getbalance().subscribe(
-      (response: any) => {
-        this.balance = response.balance;
+      (response) => {
+        this.balance = response;
+        console.log(this.balance);
       },
       (error) => {
         console.error('Error fetching balance:', error);

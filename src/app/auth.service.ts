@@ -37,15 +37,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://3.70.134.143';
+  private apiUrl = 'http://3.70.134.143/api';
 
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<any> {
     return this.http.get(`${this.apiUrl}/user`);
   }
-  getbalance(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/balance`);
+  getbalance(): Observable<string> {
+    return this.http.get(`${this.apiUrl}/balance`, { responseType: 'text' });
   }
 
   updateUser(updatedFields: any): Observable<any> {
