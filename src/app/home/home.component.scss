@@ -10,7 +10,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 2rem;
 }
 
 .background-image {
@@ -186,4 +185,38 @@ $borderc: #dee0e3;
 
 .nav-home .item {
   color: #871e35;
+}
+
+@media (max-width: 1318px) {
+  .overlay-content {
+    left: 5%;
+    transform: translate(0, 0);
+  }
+
+  .card-overlay {
+    left: 50%;
+    transform: translateX(-10%);
+    width: 50%;
+    margin-left: 0;
+  }
+}
+@media (max-width: 970px) {
+  .overlay-content {
+    top: 5%;
+    left: 25%;
+    transform: translate(0, 0);
+  }
+
+  .card-overlay {
+    top: 40%;
+    bottom: 10%;
+    transform: translate(-100%, 10%);
+    width: 100%;
+    margin-left: 50%;
+    padding: 1rem;
+  }
+
+  #lorem p {
+    font-size: 20px;
+  }
 }
