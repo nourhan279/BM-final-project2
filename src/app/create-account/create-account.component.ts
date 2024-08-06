@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { nameFormatValidator } from '../validators/custom.validator';
 import { matchPasswordValidator } from '../validators/matchpassword.validator';
 import { AuthService } from '../auth.service';
-import { User2 } from '../profile.service'; // Ensure this matches your actual import path
+import { User2 } from '../profile.service';
 import { Router } from '@angular/router';
 import { dateValidator } from '../validators/datevalidator.validator';
 import { Subscription } from 'rxjs';

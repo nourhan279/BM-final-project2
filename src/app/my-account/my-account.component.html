@@ -160,7 +160,11 @@
       <ul class="list-none p-0">
         <li *ngFor="let record of historytrans" class="py-4">
           <p class="bg-[#F3E9EB] flex justify-between w-[831px] h-[56px] accno">
-            <span>Account Number:{{ record.recipientAccount }}</span>
+            <span
+              >Account Number:{{
+                record.recipientAccount.cards.accountNumber
+              }}</span
+            >
             <span>
               <a
                 (click)="copyToClipboard(record.recipientAccount)"
@@ -184,7 +188,7 @@
             class="flex justify-between w-[800px] ml-[16px] font-[400] text-[#4B4A47]"
           >
             <span>Recipient Name:</span>
-            <span class="tor">{{ record.recipientAccount }}</span>
+            <span class="tor">{{ record.recipientAccount.username }}</span>
           </p>
         </li>
       </ul>

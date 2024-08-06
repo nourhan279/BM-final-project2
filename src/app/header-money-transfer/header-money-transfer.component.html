@@ -2,7 +2,7 @@
   <li class="item relative">
     <div class="initial">{{ getUserInitials() }}</div>
     <button class="flex items-center space-x-2" (click)="toggleDropdown()">
-      <span>{{ user1?.fname }} {{ user1?.lname }}</span>
+      <span>{{ user1.username }}</span>
       <img src="/assets/DRop_down.svg" />
     </button>
     <ul
@@ -99,12 +99,6 @@
               (ngModelChange)="convertCurrency()"
             />
 
-            <!-- <select id="sendCurrency" [(ngModel)]="sendCurrency" (ngModelChange)="convertCurrency()" name="sendCurrency">
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-              -- Add more currencies as needed--
-              </select> w3ayza a7ot el t7t brdo fel recieve-->
             <div class="custom-select">
               <select
                 id="sendCurrency"

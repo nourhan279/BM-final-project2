@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
         event instanceof NavigationError
       ) {
         // Optionally delay hiding loader for slower navigations
-        setTimeout(() => this.loaderService.isloading.next(false), 400); // Adjust delay as needed
+        setTimeout(() => this.loaderService.isloading.next(false), 400);
       }
     });
   }

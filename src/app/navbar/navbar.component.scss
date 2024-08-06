@@ -88,7 +88,7 @@ nav {
 }
 @media (max-width: 600px) {
   nav {
-    position: fixed; /* Fix nav to the top */
+    position: fixed;
     width: 100%;
     top: 0;
     left: 0;
@@ -107,17 +107,17 @@ nav {
       padding: 12px;
       color: #3c3a37;
       font-weight: 500;
-      font-size: 16px; /* Adjust font size */
-      width: 100%; /* Full width for touch areas */
+      font-size: 16px;
+      width: 100%;
       text-align: center;
     }
 
     .initial {
       border: 1px solid;
       border-radius: 50%;
-      font-size: 20px; /* Slightly smaller font size for smaller screens */
-      width: 40px; /* Adjust size for mobile */
-      height: 40px; /* Adjust size for mobile */
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
       margin-right: 0;
     }
 

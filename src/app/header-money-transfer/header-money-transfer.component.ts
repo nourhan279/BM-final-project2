@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { InactivityDialogComponent } from '../inactivity-dialog/inactivity-dialog.component';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-header-money-transfer',
@@ -25,7 +26,15 @@ import { InactivityDialogComponent } from '../inactivity-dialog/inactivity-dialo
   styleUrls: ['./header-money-transfer.component.scss'],
 })
 export class HeaderMoneyTransferComponent implements OnInit, OnDestroy {
-  user1: user | null = null;
+  user1: any = {
+    username: '',
+    phoneNumber: '',
+    email: '',
+    gender: '',
+    country: '',
+    dateOfBirth: '',
+    accounts: [],
+  };
   isDropdownVisible: boolean = false;
   faStar = faStar;
   faChevronRight = faChevronRight;
@@ -64,12 +73,16 @@ export class HeaderMoneyTransferComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private inactivityService: InactivityService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.user1 = this.profileService.getUser();
     this.startInactivityListener();
+    this.authService.getUser().subscribe((data) => {
+      this.user1 = data;
+    });
   }
 
   ngOnDestroy(): void {
@@ -129,14 +142,17 @@ export class HeaderMoneyTransferComponent implements OnInit, OnDestroy {
 
   getUserInitials(): string {
     if (this.user1) {
-      const { fname, lname } = this.user1;
-      const firstInitial = fname ? fname[0] : '';
-      const lastInitial = lname ? lname[0] : '';
-      return `${firstInitial}${lastInitial}`.toUpperCase();
+      const { username } = this.user1;
+      if (username) {
+        const nameParts = username.split(' ');
+        const firstInitial = nameParts[0] ? nameParts[0][0] : '';
+        const lastInitial =
+          nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : '';
+        return `${firstInitial}${lastInitial}`.toUpperCase();
+      }
     }
     return '';
   }
-
   resetSteps() {
     this.currentStep = 1;
   }
