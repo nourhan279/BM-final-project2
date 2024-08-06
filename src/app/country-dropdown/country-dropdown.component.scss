@@ -103,3 +103,10 @@ option img {
   margin-right: 8px;
   vertical-align: middle;
 }
+.grid-container .grid-item label {
+  position: relative;
+}
+.grid-container .grid-item input {
+  position: absolute;
+  top: 5%;
+}

@@ -30,8 +30,15 @@
 //   }
 // }
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { User2 } from './profile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +46,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://3.70.134.143/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getUser(): Observable<any> {
     return this.http.get(`${this.apiUrl}/user`);
@@ -57,5 +64,44 @@ export class AuthService {
     newPassword: string;
   }): Observable<any> {
     return this.http.put(`${this.apiUrl}/password`, passwordData);
+  }
+
+  register(user: User2): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, user).pipe(
+      catchError((error) => {
+        console.error('Error occurred:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  login(email: string, password: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const payload = JSON.stringify({ email, password });
+    return this.http
+      .post<{ token: string }>(`${this.apiUrl}/login`, payload, { headers })
+      .pipe(
+        tap((response) => {
+          // Save the token to localStorage
+          localStorage.setItem('authToken', response.token);
+        }),
+        catchError((error: HttpErrorResponse) => {
+          console.error('Login error:', error);
+          if (error.status === 401) {
+            console.error('Unauthorized: Invalid credentials');
+          } else {
+            console.error('An unexpected error occurred:', error);
+          }
+          return throwError(error);
+        })
+      );
+  }
+
+  getToken() {
+    return localStorage.getItem('authToken');
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
   }
 }

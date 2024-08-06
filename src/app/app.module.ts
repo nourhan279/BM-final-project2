@@ -57,12 +57,14 @@ import { AuthorInterceptor } from './author.interceptor';
     MatSelectModule,
     FontAwesomeModule,
     MatProgressBarModule,
+    HttpClientModule,
   ],
   providers: [
     ProfileService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthorInterceptor, multi: true },
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {
