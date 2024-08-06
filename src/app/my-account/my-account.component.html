@@ -22,7 +22,9 @@
       <li class="dropitems">
         <a (click)="navigateTo('change_password')">Change Password</a>
       </li>
-      <li class="dropitems loggout"><a routerLink="/logout">Log Out</a></li>
+      <li class="dropitems loggout">
+        <a (click)="logout()" routerLink="/logout">Log Out</a>
+      </li>
     </ul>
   </li>
 </app-navbar>
@@ -156,12 +158,12 @@
     <h1 class="txt-gry font-[600] text-[25px]">Payment History</h1>
     <div *ngIf="phistory.length > 0">
       <ul class="list-none p-0">
-        <li *ngFor="let record of phistory" class="py-4">
+        <li *ngFor="let record of historytrans" class="py-4">
           <p class="bg-[#F3E9EB] flex justify-between w-[831px] h-[56px] accno">
-            <span>Account Number:{{ record.accountNumber }}</span>
+            <span>Account Number:{{ record.recipientAccount }}</span>
             <span>
               <a
-                (click)="copyToClipboard(record.accountNumber)"
+                (click)="copyToClipboard(record.recipientAccount)"
                 class="cursor-pointer"
               >
                 <fa-icon [icon]="['fas', 'clone']"></fa-icon>
@@ -182,7 +184,7 @@
             class="flex justify-between w-[800px] ml-[16px] font-[400] text-[#4B4A47]"
           >
             <span>Recipient Name:</span>
-            <span class="tor">{{ record.recipientName }}</span>
+            <span class="tor">{{ record.recipientAccount }}</span>
           </p>
         </li>
       </ul>

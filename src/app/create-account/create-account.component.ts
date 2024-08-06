@@ -134,7 +134,7 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
     this.authService.register(requestBody).subscribe(
       (response) => {
         console.log('Registration successful:', response);
-        this.router.navigate(['login']);
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Registration failed:', error);

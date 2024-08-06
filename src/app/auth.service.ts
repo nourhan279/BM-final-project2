@@ -39,6 +39,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User2 } from './profile.service';
+import { AuthorInterceptor } from './author.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -65,6 +66,12 @@ export class AuthService {
   }): Observable<any> {
     return this.http.put(`${this.apiUrl}/password`, passwordData);
   }
+
+  gethistory(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/transactions`);
+  }
+
+  //>>>>>>>>>>>login and register>>>>>>>>>>>>>>>>>>>>>
 
   register(user: User2): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user).pipe(
@@ -103,5 +110,16 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  logout(): Observable<string> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<string>(
+      `${this.apiUrl}/logout`,
+      {}, // Assuming no body is required for the logout request
+      { headers, responseType: 'text' as 'json' } // Handle response as text
+    );
   }
 }

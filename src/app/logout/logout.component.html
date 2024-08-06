@@ -1,97 +1,97 @@
-<div class="flex flex-row justify-between">
+<header class="flex flex-row justify-between mt-2">
   <h1 class="text-[32px] text-[#24221E] ml-4">Speedo Transfer</h1>
-  <span
-    ><a href="#"><i class="fa-solid fa-x text-black mr-4"></i></a
-  ></span>
-</div>
-
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="top">
-    <p
-      style="
-        font-size: 32px;
-        font-weight: 600;
-        line-height: 48px;
-        text-align: left;
-
-        margin-bottom: 10px;
-      "
-    >
-      login here
-    </p>
-    <p
-      style="
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        text-align: left;
-      "
-    >
-      Login to your account
-    </p>
-  </div>
-
-  <div>
-    <label for="email" class="mb-3">Your Email address</label>
-    <input
-      id="email"
-      formControlName="email"
-      type="email"
-      placeholder="Email@gmail.com"
-    />
-    <div
-      *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-    >
-      <small
-        *ngIf="loginForm.get('email')?.hasError('required')"
-        class="text-danger"
-        >email is required.</small
-      >
-      <small
-        *ngIf="loginForm.get('email')?.hasError('email')"
-        class="text-danger"
-        >please enter a valid email.</small
-      >
-    </div>
-  </div>
-
-  <div class="password">
-    <label class="mb-3" for="password">Password</label>
-    <input
-      id="password"
-      formControlName="password"
-      type="password"
-      placeholder="************ "
-    />
-    <div *ngIf="loginForm.get('password')?.touched">
-      <small
-        *ngIf="loginForm.get('password')?.hasError('required')"
-        class="text-danger"
-        >password is required.</small
-      >
-      <small
-        *ngIf="loginForm.get('password')?.hasError('minlength')"
-        class="text-danger"
-        >password must be at least 8 characters</small
-      >
-    </div>
-  </div>
-
-  <button class="mb-2" type="submit" [disabled]="!loginForm.valid">
-    login
+  <button routerLink="/" class="close-button">
+    <i class="fa-solid fa-x text-black mr-4"></i>
   </button>
-  <div style="text-align: center">
-    <p>
-      Don't have an account ?
-      <a
-        class="text-[#871E35] font-[500] border-b-2 border-[#871E35]"
-        routerLink="/register"
-        >Create Account</a
-      >
-    </p>
-  </div>
-</form>
-
-<div class="footer">
-  <p class="style10">©Speedo Transfer Payments Limited 2024</p>
+</header>
+<div *ngIf="LoaderService.isloading | async" class="mat-progress-bar fixed-top">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
+
+<main>
+  <section class="login-section">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <p class="text-[16px] font-normal mb-4 mt-3">
+          Welcome Back . Login to your account
+        </p>
+        <label for="email" class="form-label">Your Email Address</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          placeholder="Email@gmail.com"
+          class="form-input"
+        />
+        <div
+          *ngIf="
+            loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+          "
+        >
+          <small
+            *ngIf="loginForm.get('email')?.hasError('required')"
+            class="text-danger"
+          >
+            Email is required.
+          </small>
+          <small
+            *ngIf="loginForm.get('email')?.hasError('email')"
+            class="text-danger"
+          >
+            Please enter a valid email.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder=""
+          class="form-input"
+        />
+        <div *ngIf="loginForm.get('password')?.touched">
+          <small
+            *ngIf="loginForm.get('password')?.hasError('required')"
+            class="text-danger"
+          >
+            Password is required.
+          </small>
+          <small
+            *ngIf="loginForm.get('password')?.hasError('minlength')"
+            class="text-danger"
+          >
+            Password must be at least 8 characters.
+          </small>
+        </div>
+      </div>
+
+      <button
+        class="btn-submit"
+        type="submit"
+        [disabled]="!loginForm.valid"
+        id="login"
+      >
+        Login
+      </button>
+    </form>
+
+    <div class="create-account">
+      <p>
+        Don't have an account?
+        <a
+          class="text-[#871E35] font-medium border-b-2 border-[#871E35]"
+          routerLink="/register"
+        >
+          Create Account
+        </a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="style10">© Speedo Transfer Payments Limited 2024</p>
+</footer>

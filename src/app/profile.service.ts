@@ -46,12 +46,12 @@ export class ProfileService {
     };
   }
 
-  private phistory: TransferHistory[] = [
-    { recipientName: 'John Doe', amount: 1000, accountNumber: '1234567890' },
-    { recipientName: 'Jane Smith', amount: 500, accountNumber: '0987654321' },
-  ];
+  // private phistory: TransferHistory[] = [
+  //   { recipientName: 'John Doe', amount: 1000, accountNumber: '1234567890' },
+  //   { recipientName: 'Jane Smith', amount: 500, accountNumber: '0987654321' },
+  // ];
 
-  getHistory(): TransferHistory[] {
-    return this.phistory;
-  }
+  // getHistory(): TransferHistory[] {
+  //   return this.phistory;
+  // }
 }

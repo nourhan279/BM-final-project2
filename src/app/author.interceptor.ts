@@ -7,18 +7,17 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthorInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // Replace 'YOUR_TOKEN_HERE' with the actual token
-    const authToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJubm5ubm5AZW1haWwuY29tIiwiaWF0IjoxNzIyOTAxMjYwLCJleHAiOjE3MjI5MDQ4NjB9.QXmbBERo6DecoWpxca4PshtX7DLWEV_jWwSyknE5g94';
+    const authToken = this.auth.getToken();
 
     // Clone the request and set the new header
     const authReq = req.clone({
@@ -27,7 +26,6 @@ export class AuthorInterceptor implements HttpInterceptor {
       },
     });
 
-    // Pass on the cloned request instead of the original request
     return next.handle(authReq);
   }
 }
