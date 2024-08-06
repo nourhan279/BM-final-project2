@@ -248,7 +248,7 @@ export class MyAccountComponent {
       next: () => {
         console.log('Logout successful');
         localStorage.removeItem('authToken'); // Remove token from local storage
-        this.router.navigate(['/logout']); // Navigate to the login page
+        this.router.navigate(['/login']); // Navigate to the login page
       },
       error: (error) => {
         console.error('Logout failed', error);

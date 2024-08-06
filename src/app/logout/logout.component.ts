@@ -31,7 +31,7 @@ export class LogoutComponent {
         next: (response: string) => {
           console.log('Logout successful', response);
           localStorage.removeItem('authToken'); // Remove token from local storage
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           console.error('Logout failed', error);
@@ -47,7 +47,7 @@ export class LogoutComponent {
       next: () => {
         console.log('Logout successful');
         localStorage.removeItem('authToken'); // Remove token from local storage
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Logout failed', error);
