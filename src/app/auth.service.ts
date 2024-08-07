@@ -40,6 +40,38 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/transactions`);
   }
 
+  // makeTransfer(transferData: any): Observable<any> {
+  //   const token = localStorage.getItem('authToken');
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   });
+  //   return this.http
+  //     .post(`${this.apiUrl}/transfer`, transferData, { headers })
+  //     .pipe(
+  //       catchError((error) => {
+  //         console.error('Transfer error:', error);
+  //         throw error;
+  //       })
+  //     );
+  // }
+  makeTransfer(transferData: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http
+      .post(`${this.apiUrl}/transfer`, transferData, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Transfer error:', error);
+          // Handle the error appropriately, e.g., show error message to user
+          return throwError(error); // Use throwError to rethrow the error
+        })
+      );
+  }
+
   //>>>>>>>>>>>login and register>>>>>>>>>>>>>>>>>>>>>
 
   register(user: User2): Observable<any> {

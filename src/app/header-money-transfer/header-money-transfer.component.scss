@@ -153,12 +153,11 @@
 }
 
 .popup-content {
-  background: white;
+  background-color: white;
   padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
+  border-radius: 5px;
   width: 100%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
   position: relative;
 }
 
@@ -166,7 +165,23 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 18px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.card {
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.delete-button {
+  background-color: #871e35;
+  border: none;
   cursor: pointer;
 }
 
@@ -287,6 +302,12 @@ button:hover {
   padding: 10px;
   color: #3c3a37;
   font-weight: 500;
+  margin-left: 150px;
+}
+@media (max-width: 800px) {
+  .item {
+    margin-left: 10px;
+  }
 }
 .initial {
   border: 1px solid;
@@ -298,6 +319,7 @@ button:hover {
   text-align: center;
   background-color: #e3e2e2;
   margin-right: 10px;
+
   border-color: #e3e2e2;
   color: #3c3a37;
 }

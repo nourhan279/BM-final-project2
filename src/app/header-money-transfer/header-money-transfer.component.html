@@ -87,7 +87,7 @@
     <div class="currenyConverter">
       <h1>How much are you sending?</h1>
       <p>Rate guaranteed (2h)<br />1 USD = 48.4220 EGP</p>
-      <form id="conversionForm" #form="ngForm">
+      <form id="conversionForm" #form="ngForm" (ngSubmit)="confirmTransfer()">
         <div class="input-group">
           <label for="sendAmount">You send</label>
           <div class="currency-input">
@@ -121,7 +121,15 @@
                 <option value="GBP" data-flag-url="/assets/egypt.svg">
                   GBP
                 </option>
-                <!-- Add more currencies as needed -->
+                <option value="SAR" data-flag-url="/assets/egypt.svg">
+                  SAR
+                </option>
+                <option value="EGP" data-flag-url="/assets/egypt.svg">
+                  EGP
+                </option>
+                <option value="JPY" data-flag-url="/assets/egypt.svg">
+                  JPY
+                </option>
               </select>
             </div>
           </div>
@@ -133,7 +141,7 @@
               type="number"
               id="receiveAmount"
               name="receiveAmount"
-              [value]="receiveAmount"
+              [value]="sendAmount"
               readonly
             />
             <div class="custom-select">
@@ -143,13 +151,30 @@
                 (ngModelChange)="convertCurrency()"
                 name="receiveCurrency"
               >
+                <option
+                  value="USD"
+                  data-flag-url="../../assets/Flag_of_Kuwait.png"
+                >
+                  USD
+                </option>
+                <option
+                  value="EUR"
+                  data-flag-url="../../assets/Flag_of_Egypt.png"
+                >
+                  EUR
+                </option>
+                <option value="GBP" data-flag-url="/assets/egypt.svg">
+                  GBP
+                </option>
+                <option value="SAR" data-flag-url="/assets/egypt.svg">
+                  SAR
+                </option>
                 <option value="EGP" data-flag-url="/assets/egypt.svg">
-                  <img src="/assets/egypt.svg" />
                   EGP
                 </option>
-                <option value="INR">INR</option>
-                <option value="CAD">CAD</option>
-                <!-- Add more currencies as needed -->
+                <option value="JPY" data-flag-url="/assets/egypt.svg">
+                  JPY
+                </option>
               </select>
             </div>
           </div>
@@ -188,16 +213,51 @@
                 <div
                   class="p-4 bg-gray-100 flex items-center justify-between mb-4"
                 >
-                  <div class="w-full flex items-center">
-                    <fa-icon
-                      [icon]="faBuildingColumns"
-                      class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
-                    ></fa-icon>
-                    <div>
-                      <div class="font-semibold mt-1 mb-1 text-[#3C3A37] bg">
-                        Asmaa Dosouki
+                  <div
+                    *ngIf="isPopupOpen"
+                    class="popup-overlay"
+                    (click)="closePopup()"
+                  >
+                    <div
+                      class="popup-content"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <span class="close-button" (click)="closePopup()"
+                        >&times;</span
+                      >
+                      <div
+                        class="favourite-section flex flex-col text-left cursor-pointer"
+                      >
+                        <div class="flex flex-row mb-3">
+                          <div class="text-[#871e35]">
+                            <fa-icon [icon]="faStar"></fa-icon>
+                          </div>
+                          <div class="ms-1 text-[#871e35]">Favourite List</div>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                          <div
+                            *ngFor="let fav of favourites"
+                            class="card p-4 bg-gray-100 flex items-center justify-between w-full"
+                          >
+                            <div class="flex items-center">
+                              <fa-icon
+                                [icon]="faBuildingColumns"
+                                class="bg-[#E3E2E2] rounded-full p-2 text-2xl text-[#3C3A37] mr-4"
+                              ></fa-icon>
+                              <div class="w-full">
+                                <div>{{ fav.accountHolderName }}</div>
+                                <div>{{ fav.accountNumber }}</div>
+                              </div>
+                            </div>
+                            <button
+                              class="delete-button text-red-500"
+                              (click)="deleteFavourite(fav.accountNumber)"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <p class="text-gray-500">Account xxxx7890</p>
                     </div>
                   </div>
                 </div>
@@ -263,12 +323,12 @@
 <div *ngIf="currentStep === 2">
   <div class="max-w-[578px] mx-auto mt-10 p-2 bg-white rounded-lg shadow-md">
     <div class="text-center mb-6">
-      <h1 class="text-3xl font-bold">1000 USD</h1>
+      <h1 class="text-3xl font-bold">{{ sendAmount }}{{ sendCurrency }}</h1>
       <p class="text-gray-600">Transfer amount</p>
     </div>
     <div class="flex flex-row w-full">
       <p class="ps-4 w-[75%]">Total amount</p>
-      <p class="font-bold ps-3">48.4220 EGP</p>
+      <p class="font-bold ps-3">{{ sendAmount }}{{ receiveCurrency }}</p>
     </div>
     <div class="w-[95%] h-[1px] bg-[#E3E2E2] mb-5 ms-3 mt-3"></div>
 
@@ -285,9 +345,10 @@
               <div>
                 <p class="from font-semibold">From</p>
                 <div class="font-semibold mt-1 mb-1 text-[#3C3A37]">
-                  Jonathon Smith
+                  {{ user1.username }}
                 </div>
-                <p class="text-gray-500">Account xxxx7890</p>
+
+                <p class="text-gray-500">{{ user1.accounts.accountNumber }}</p>
               </div>
             </div>
           </div>
@@ -305,9 +366,9 @@
               <div>
                 <p class="to from font-semibold">To</p>
                 <div class="font-semibold mt-1 mb-1 text-[#3C3A37] bg">
-                  Asmaa Dosouki
+                  {{ recipientName }}
                 </div>
-                <p class="text-gray-500">Account xxxx7890</p>
+                <p class="text-gray-500">{{ recipientAccount }}</p>
               </div>
             </div>
           </div>
@@ -316,7 +377,10 @@
 
       <!-- Buttons -->
       <div class="flex flex-col space-y-2">
-        <button class="w-full py-2 rounded-lg" (click)="goToNextStep()">
+        <button
+          class="w-full py-2 rounded-lg"
+          (click)="goToNextStep(); confirmTransfer()"
+        >
           Confirm
         </button>
         <button class="w-full py-2 rounded-lg" (click)="goToPreviousStep()">
@@ -327,7 +391,6 @@
   </div>
 </div>
 
-<!-- Step 3 -->
 <!-- Step 3 -->
 <div *ngIf="currentStep === 3">
   <div
@@ -341,7 +404,8 @@
     <div class="text-center mb-6 mt-5">
       <h1 class="text-3xl font-bold">Your transfer was successful</h1>
       <h3 class="text-3xl font-bold">
-        48.4220 <span class="text-[#871e35]">EGP</span>
+        {{ sendAmount }}
+        <span class="text-[#871e35]">{{ sendCurrency }}</span>
       </h3>
     </div>
 
@@ -358,9 +422,10 @@
               <div>
                 <p class="from font-semibold text-left">From</p>
                 <div class="font-semibold mt-1 mb-1 text-[#3C3A37]">
-                  Jonathon Smith
+                  {{ user1.username }}
                 </div>
-                <p class="text-gray-500">Account xxxx7890</p>
+                <p class="text-gray-500">{{ user1.accountno }}</p>
+                <!-- ////////////////// -->
               </div>
             </div>
           </div>
@@ -378,9 +443,9 @@
               <div>
                 <p class="to from font-semibold text-left">To</p>
                 <div class="text-left font-semibold mt-1 mb-1 text-[#3C3A37]">
-                  Asmaa dosouki
+                  {{ recipientName }}
                 </div>
-                <p class="text-gray-500">Account xxxx7890</p>
+                <p class="text-gray-500">{{ recipientAccount }}</p>
               </div>
             </div>
           </div>
@@ -388,7 +453,7 @@
       </div>
       <div class="flex flex-row w-full text-[#565552] mt-0">
         <div class="ps-2 w-[75%] text-left">Transfer amount</div>
-        <div class="ps-4">48.4220 EGP</div>
+        <div class="ps-4">{{ receiveAmount }}{{ receiveCurrency }}</div>
       </div>
       <div class="w-[95%] h-[1px] bg-[#E3E2E2] mb-5 ms-3 mt-3"></div>
       <div class="flex flex-row w-full text-[#565552] mt-0">
@@ -402,7 +467,10 @@
         <button routerLink="/" class="w-full py-2 rounded-lg">
           Back to home
         </button>
-        <button (click)="openPopup()" class="w-full py-2 rounded-lg">
+        <button
+          (click)="openPopup(); addToFavourites()"
+          class="w-full py-2 rounded-lg"
+        >
           Add to favourite
         </button>
       </div>

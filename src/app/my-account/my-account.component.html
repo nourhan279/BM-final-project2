@@ -156,24 +156,24 @@
   <!-- Payment History Section -->
   <div *ngIf="activeSection === 'history' && user1" id="history" #history>
     <h1 class="txt-gry font-[600] text-[25px]">Payment History</h1>
-    <div *ngIf="phistory.length > 0">
+    <div *ngIf="historytrans.length > 0">
       <ul class="list-none p-0">
         <li *ngFor="let record of historytrans" class="py-4">
           <p class="bg-[#F3E9EB] flex justify-between w-[831px] h-[56px] accno">
             <span
-              >Account Number:{{
-                record.recipientAccount.cards.accountNumber
-              }}</span
+              >Account Number: {{ record.recipientAccount.accountNumber }}</span
             >
             <span>
               <a
-                (click)="copyToClipboard(record.recipientAccount)"
+                (click)="copyToClipboard(record.recipientAccount.accountNumber)"
                 class="cursor-pointer"
               >
                 <fa-icon [icon]="['fas', 'clone']"></fa-icon>
               </a>
               <span
-                *ngIf="copiedAccountNumber === record.accountNumber"
+                *ngIf="
+                  copiedAccountNumber === record.recipientAccount.accountNumber
+                "
                 class="copy-status"
               >
                 <fa-icon [icon]="['fas', 'check']"></fa-icon> copied!😄
@@ -182,23 +182,32 @@
           </p>
           <p class="flex justify-between w-[800px] ml-[16px] font-[500]">
             <span>Account Details:</span>
-            <span class="tor">Total Price:{{ record.amount | currency }}</span>
+            <span class="tor">Total Price: {{ record.amount | currency }}</span>
           </p>
           <p
             class="flex justify-between w-[800px] ml-[16px] font-[400] text-[#4B4A47]"
           >
             <span>Recipient Name:</span>
-            <span class="tor">{{ record.recipientAccount.username }}</span>
+            <span class="tor">{{ record.recipientUser.username }}</span>
           </p>
         </li>
       </ul>
     </div>
-    <div *ngIf="phistory.length === 0">
+    <div *ngIf="historytrans.length === 0">
       <p>No payment history available.</p>
     </div>
   </div>
 
   <!-- Change Password Section -->
+  <div class="popup" *ngIf="isPopupOpen">
+    <div class="popup-content">
+      <div class="popup-animation">
+        <fa-icon [icon]="faCheck" class="text-3xl text-green-600"></fa-icon>
+      </div>
+      <p class="popup-message">Updated Successfully!</p>
+      <button (click)="closePopup()" class="close-popup-btn">Close</button>
+    </div>
+  </div>
   <div
     *ngIf="activeSection === 'change_password' && user1"
     id="change_password"

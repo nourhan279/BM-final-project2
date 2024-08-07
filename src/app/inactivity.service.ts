@@ -8,7 +8,7 @@ import { InactivityDialogComponent } from './inactivity-dialog/inactivity-dialog
 })
 export class InactivityService {
   private timeoutId: any;
-  private readonly inactivityTime = 300000;
+  private readonly inactivityTime = 40000;
   private dialogRef: any;
 
   constructor(

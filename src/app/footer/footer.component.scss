@@ -1,66 +1,254 @@
+// @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+// * {
+//   box-sizing: border-box;
+//   margin: auto;
+//   font-family: "Inter" sans-serif;
+// }
+
+// .container {
+//   background-color: hsla(348, 29%, 93%, 1);
+//   margin: 0px !important;
+//   width: 1473px;
+//   position: absolute;
+//   top: 900px;
+//   bottom: 0px;
+
+//   .container2 {
+//     background-color: hsla(348, 29%, 93%, 1);
+//     margin: 0px !important;
+//     width: 1473px;
+//   }
+// }
+// img {
+//   margin-top: 10px;
+//   max-width: 500px;
+//   max-height: 500px;
+// }
+// .pinkc {
+//   height: 600px;
+//   padding: 50px, 30px, 50px, 0px;
+// }
+// section p {
+//   font-family: "Inter" sans-serif;
+//   font-size: 15px;
+//   font-weight: 600;
+//   line-height: 24px;
+//   text-align: left;
+//   color: hsla(36, 4%, 23%, 1);
+// }
+// .images {
+//   text-align: left;
+//   img {
+//     margin-right: 20px;
+//   }
+// }
+// .footer {
+//   background-color: hsla(347, 64%, 20%, 1);
+//   height: 300px;
+//   color: hsla(0, 0%, 98%, 1);
+//   width: 1473px;
+// }
+// .contact {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+// .style1 {
+//   color: hsla(347, 64%, 32%, 1);
+
+//   font-size: 15px;
+//   font-weight: 700;
+//   line-height: 30px;
+//   text-align: left;
+// }
+// .style2 {
+//   font-size: 30px;
+//   font-weight: 500;
+//   line-height: 40px;
+//   text-align: left;
+//   color: hsla(40, 9%, 13%, 1);
+// }
+// .style3 {
+//   font-size: 20px;
+//   font-weight: 200;
+//   line-height: 24px;
+//   text-align: left;
+// }
+// .style4 {
+//   font-size: 25px;
+//   font-weight: 500;
+//   line-height: 48px;
+//   text-align: center;
+// }
+// .style5 {
+//   font-family: Roboto;
+//   font-size: 12px;
+//   font-weight: 400;
+//   line-height: 28.8px;
+//   text-align: center;
+// }
+// .style6 {
+//   font-family: Roboto;
+//   font-size: 15px;
+//   font-weight: 700;
+//   line-height: 24px;
+//   text-align: center;
+// }
+
+// .style7 {
+//   font-family: Roboto;
+//   font-size: 12px;
+//   font-weight: 500;
+//   line-height: 24px;
+//   color: white;
+//   text-align: center;
+// }
+
+// .style8 {
+//   font-family: Roboto;
+//   font-size: 12px;
+//   font-weight: 400;
+//   line-height: 24px;
+//   text-align: center;
+
+//   color: white;
+// }
+
+// .style9 {
+//   font-family: Roboto;
+//   font-size: 12px;
+//   font-weight: 500;
+//   line-height: 24px;
+//   padding-top: 1rem;
+//   text-align: center;
+// }
+
+// .style10 {
+//   font-family: Roboto;
+//   font-size: 12px;
+//   font-weight: 400;
+//   line-height: 28.8px;
+//   text-align: center;
+// }
+
+// html,
+// body {
+//   margin: 0;
+//   overflow-x: hidden !important;
+// }
+
+// .container {
+//   position: relative;
+
+//   background-color: hsla(348, 29%, 93%, 1);
+//   padding: 0 !important;
+//   margin: 0 !important;
+// }
+
+// .footer {
+//   margin: 0 !important;
+//   padding: 0 !important;
+//   box-sizing: border-box;
+// }
+
+// :host-context(.home-footer) .container {
+//   top: 100px;
+// }
+// :host-context(.money-footer) .container {
+//   top: 100px;
+// }
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* General styling */
 * {
   box-sizing: border-box;
-  margin: auto;
-  font-family: "Inter" sans-serif;
+  margin: 0; /* Remove default margins */
+  font-family: "Inter", sans-serif;
 }
 
+/* Container styling */
 .container {
   background-color: hsla(348, 29%, 93%, 1);
-  margin: 0px !important;
-  width: 1473px;
-  position: absolute;
-  top: 900px;
-  bottom: 0px;
+  width: 100%; /* Full width */
+  max-width: 1473px; /* Max width */
+  margin: 0 auto; /* Center container */
+  padding: 0;
+}
 
-  .container2 {
-    background-color: hsla(348, 29%, 93%, 1);
-    margin: 0px !important;
-    width: 1473px;
-  }
+/* Inner container styling */
+.container2 {
+  background-color: hsla(348, 29%, 93%, 1);
+  width: 100%; /* Full width */
+  max-width: 1473px; /* Max width */
+  margin: 0 auto; /* Center container */
 }
+
+/* Image styling */
 img {
-  margin-top: 10px;
-  max-width: 500px;
-  max-height: 500px;
+  display: block; /* Remove bottom space */
+  max-width: 100%; /* Ensure responsiveness */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 auto; /* Center images if needed */
 }
+
+/* .pinkc section styling */
 .pinkc {
-  height: 600px;
-  padding: 50px, 30px, 50px, 0px;
+  padding: 50px 30px; /* Apply padding correctly */
+  background-color: hsla(348, 29%, 93%, 1); /* Ensure consistent background */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
 }
-section p {
-  font-family: "Inter" sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 24px;
-  text-align: left;
-  color: hsla(36, 4%, 23%, 1);
-}
-.images {
-  text-align: left;
-  img {
-    margin-right: 20px;
-  }
-}
+
+/* Footer Styling */
 .footer {
   background-color: hsla(347, 64%, 20%, 1);
-  height: 300px;
   color: hsla(0, 0%, 98%, 1);
-  width: 1473px;
+  width: 100%; /* Full width */
+  padding: 20px; /* Add padding for content */
+  box-sizing: border-box;
+  text-align: center; /* Center text */
 }
-.contact {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+/* Adjusting for smaller screens */
+@media (max-width: 768px) {
+  .footer {
+    padding: 15px; /* Adjust padding */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .pinkc {
+    padding: 30px 20px; /* Adjust padding */
+    flex-direction: column; /* Stack items vertically */
+    text-align: center; /* Center text */
+  }
 }
+
+/* Adjusting for very small screens */
+@media (max-width: 480px) {
+  .footer {
+    padding: 10px; /* Adjust padding further */
+    font-size: 14px; /* Adjust font size */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .pinkc {
+    padding: 20px 10px; /* Adjust padding further */
+    font-size: 14px; /* Adjust font size */
+  }
+}
+
+/* Specific text styling */
 .style1 {
   color: hsla(347, 64%, 32%, 1);
-
   font-size: 15px;
   font-weight: 700;
   line-height: 30px;
   text-align: left;
 }
+
 .style2 {
   font-size: 30px;
   font-weight: 500;
@@ -68,18 +256,21 @@ section p {
   text-align: left;
   color: hsla(40, 9%, 13%, 1);
 }
+
 .style3 {
   font-size: 20px;
   font-weight: 200;
   line-height: 24px;
   text-align: left;
 }
+
 .style4 {
   font-size: 25px;
   font-weight: 500;
   line-height: 48px;
   text-align: center;
 }
+
 .style5 {
   font-family: Roboto;
   font-size: 12px;
@@ -87,6 +278,7 @@ section p {
   line-height: 28.8px;
   text-align: center;
 }
+
 .style6 {
   font-family: Roboto;
   font-size: 15px;
@@ -110,7 +302,6 @@ section p {
   font-weight: 400;
   line-height: 24px;
   text-align: center;
-
   color: white;
 }
 
@@ -129,31 +320,4 @@ section p {
   font-weight: 400;
   line-height: 28.8px;
   text-align: center;
-}
-
-html,
-body {
-  margin: 0;
-  overflow-x: hidden !important;
-}
-
-.container {
-  position: relative;
-
-  background-color: hsla(348, 29%, 93%, 1);
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.footer {
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box;
-}
-
-:host-context(.home-footer) .container {
-  top: 100px;
-}
-:host-context(.money-footer) .container {
-  top: 100px;
 }

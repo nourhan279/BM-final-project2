@@ -60,10 +60,10 @@ export class MyAccountComponent {
       this.extractLastName();
     });
     this.loadBalance();
-    this.history();
+    this.loadHistory();
   }
 
-  history() {
+  loadHistory() {
     this.authService.gethistory().subscribe(
       (arr) => {
         this.historytrans = arr;
@@ -242,7 +242,6 @@ export class MyAccountComponent {
         }
       );
   }
-
   logout() {
     this.authService.logout().subscribe({
       next: () => {
